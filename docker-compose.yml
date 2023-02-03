@@ -2,6 +2,8 @@ version: "3"
 services:
   flask:
     build: .
-    image: origin
+    image: origin:latest
     ports:
-      - 8000:8000
+      - 8000:80
+    environment:
+      VARIABLE_NAME: app
