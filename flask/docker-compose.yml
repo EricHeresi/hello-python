@@ -1,0 +1,7 @@
+version: "3"
+services:
+  flask:
+    build: .
+    ports:
+      - 8000:8000
+    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 wsgi:app

@@ -1,9 +1,20 @@
 version: "3"
 services:
-  flask:
-    build: .
-    image: origin:latest
-    ports:
-      - 8000:80
+  nginx-proxy:
+    build: nginx
+    restart: always
+    volumes:
+      - ./nginx/default.conf:/tmp/default.conf
     environment:
-      VARIABLE_NAME: app
+      - FLASK_SERVER_ADDR=flask-app:8000
+    ports:
+      - "80:80"
+    depends_on:
+      - flask-app
+    command: /app/start.sh
+  flask-app:
+    build: flask
+    restart: always
+    #ports:
+     # - '8000:8000'
+    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 wsgi:app
