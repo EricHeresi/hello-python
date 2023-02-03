@@ -1,7 +1,8 @@
 version: "3"
 services:
   flask:
+    image: origin
     build: .
     ports:
       - 8000:8000
-    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 wsgi:app
+    command: gunicorn -b 0.0.0.0:8000 wsgi:app
